@@ -18,7 +18,7 @@ W          = 600
 HEADER_H   = 130
 BODY_PAD   = 36
 CARD_ROW_H = 36
-CARD_ROWS  = 4
+CARD_ROWS  = 5
 FOOTER_H   = 44
 
 
@@ -42,7 +42,7 @@ def _th(draw, text, fnt):
     return bb[3] - bb[1]
 
 
-def generar_imagen_base64(nombre, numero_cita, fecha_cita, hora_cita, modalidad):
+def generar_imagen_base64(nombre, numero_cita, fecha_cita, hora_cita, modalidad, ubicacion=None):
     f_title    = _font("Bold",     30)
     f_subtitle = _font("Light",    11)
     f_greeting = _font("SemiBold", 18)
@@ -108,11 +108,18 @@ def generar_imagen_base64(nombre, numero_cita, fecha_cita, hora_cita, modalidad)
     draw.rectangle([(cx0, cy0), (cx0 + 4, cy1)], fill=NAVY)
 
     hora_fmt = str(hora_cita)[:5] if hora_cita else ""
+    if ubicacion is None:
+        ubicacion = (
+            "Av. 50 Mts. 100, Torre 3, Piso 7, Cuernavaca"
+            if str(modalidad).lower() == "presencial"
+            else "Videollamada (enlace por correo)"
+        )
     rows = [
-        ("N.° de cita",       str(numero_cita)),
-        ("Fecha",             str(fecha_cita)),
-        ("Hora",              f"{hora_fmt} hrs"),
-        ("Modalidad",         str(modalidad).capitalize()),
+        ("N.° de cita",  str(numero_cita)),
+        ("Fecha",        str(fecha_cita)),
+        ("Hora",         f"{hora_fmt} hrs"),
+        ("Modalidad",    str(modalidad).capitalize()),
+        ("Ubicación",    str(ubicacion)),
     ]
     ry = cy0 + 16
     for label, value in rows:
