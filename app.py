@@ -26,7 +26,8 @@ def generar():
             numero_cita = data.get("numero_cita", "CIT-0000"),
             fecha_cita  = data.get("fecha_cita", ""),
             hora_cita   = data.get("hora_cita", ""),
-            modalidad   = data.get("modalidad", "presencial"),
+           modalidad   = data.get("modalidad", "presencial"),
+            ubicacion   = data.get("ubicacion", None),
         )
         img_bytes = base64.b64decode(imagen_b64)
         filename = f"{uuid.uuid4()}.png"
